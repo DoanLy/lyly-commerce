@@ -19,7 +19,9 @@ async function init() {
       connection: { search_path: 'nop,public' },
       onnotice: () => {},
     })
-    const run = (s) => async (text, params = []) => [...(await s.unsafe(text, params.map(norm)))]
+    // The postgres driver serialises jsonb parameters itself, so objects are passed through
+    // untouched (stringifying them here would store a JSON *string* instead of an object).
+    const run = (s) => async (text, params = []) => [...(await s.unsafe(text, params.map((v) => (v === undefined ? null : v))))]
     impl = {
       kind: 'postgres',
       q: run(sql),

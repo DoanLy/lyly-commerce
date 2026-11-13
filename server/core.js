@@ -4,7 +4,7 @@ import { round2, unsign, sign, parseCookies, cookie, bad, HttpError } from './ut
 // ---------------- settings ----------------
 export const DEFAULT_SETTINGS = {
   store: {
-    name: 'LyLy Commerce', tagline: 'Everyday tech, style & gifts', url: 'https://lyly-commerce.vercel.app',
+    name: 'LyLy Commerce', tagline: 'Everyday tech, style & gifts', url: 'https://lylynew-commerce.vercel.app',
     companyName: 'LyLy Commerce Co.', companyAddress: '12 Nguyen Hue, District 1, Ho Chi Minh City', companyPhone: '+84 28 0000 1234',
     email: 'hello@lyly-commerce.example', storeClosed: false, announcement: 'Free shipping on orders over $100 · 30-day returns',
   },

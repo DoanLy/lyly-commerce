@@ -1,6 +1,6 @@
 # HANDOFF — LyLy Commerce
 
-Cập nhật lần cuối: 2026-11-13 · version 1.0.0
+Cập nhật lần cuối: 2026-11-13 · version 1.0.1
 
 ## 1. Tổng quan
 
@@ -8,7 +8,7 @@ Cập nhật lần cuối: 2026-11-13 · version 1.0.0
 | --- | --- |
 | Source | `D:\CODE_2026\lyly-commerce` |
 | GitHub | `DoanLy/lyly-commerce` |
-| Vercel | project `lyly-commerce` (region `icn1` — Seoul, gần DB) |
+| Vercel | project `lylynew-commerce` → https://lylynew-commerce.vercel.app (region `icn1` — Seoul, gần DB) |
 | Database | Supabase project `qbumdsvcdgrztplzhtxc`, **schema `nop`** (dùng chung project với lyly-storefront nhưng không đụng schema `public`) |
 | DB host | Session pooler `aws-1-ap-northeast-2.pooler.supabase.com:5432` |
 | Dev local | `npm run dev` → http://localhost:5180 (PGlite nếu không có `DATABASE_URL`) |
@@ -66,3 +66,8 @@ admin dùng `admin-*` (`admin-nav-orders`, `admin-login-email`, `admin-product-s
 - Admin chưa sửa được địa chỉ của khách (chỉ xem).
 - Ảnh sản phẩm upload được lưu dạng data URL trong DB (giới hạn ~900px), seed dùng hình minh họa tự vẽ.
 - Chưa có đa ngôn ngữ, đa cửa hàng, vendor, affiliate, forum.
+
+## 8. Ghi chú kỹ thuật
+
+- Driver `postgres` tự serialize tham số jsonb → trong `server/db.js` **không** được `JSON.stringify` object khi chạy với `DATABASE_URL`
+  (PGlite thì ngược lại, cần stringify). Lỗi này từng làm địa chỉ đơn hàng/settings bị lưu thành chuỗi JSON; đã sửa dữ liệu ngày 2026-11-13.
