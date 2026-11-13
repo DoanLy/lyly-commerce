@@ -1,5 +1,6 @@
 import { q, one } from './db.js'
 import { hashPassword, slugify } from './util.js'
+import PRODUCT_IMAGES from './product-images.js'
 
 // Demo data. Brands and product names are invented for this store.
 const CATEGORIES = [
@@ -204,6 +205,7 @@ export async function seed() {
       String(o.newItem ? i % 5 : 30 + i), i, !!o.callForPrice,
     ])
     productIds[name] = pid
+    if (PRODUCT_IMAGES[slug]) await q('insert into product_pictures (product_id, url, alt) values ($1,$2,$3)', [pid, PRODUCT_IMAGES[slug], name])
     await q('insert into product_categories (product_id, category_id) values ($1,$2)', [pid, cats[cat]])
     if (mfr) await q('insert into product_manufacturers (product_id, manufacturer_id) values ($1,$2)', [pid, mfrs[mfr]])
     for (const [k, v] of Object.entries(o.specs || {})) if (specOpt[`${k}|${v}`]) await q('insert into product_spec_map (product_id, option_id) values ($1,$2)', [pid, specOpt[`${k}|${v}`]])

@@ -1,6 +1,6 @@
 # HANDOFF — LyLy Commerce
 
-Cập nhật lần cuối: 2026-11-13 · version 1.0.1
+Cập nhật lần cuối: 2026-11-13 · version 1.0.2
 
 ## 1. Tổng quan
 
@@ -64,7 +64,7 @@ admin dùng `admin-*` (`admin-nav-orders`, `admin-login-email`, `admin-product-s
 
 - Trình soạn thảo nội dung là textarea HTML thô.
 - Admin chưa sửa được địa chỉ của khách (chỉ xem).
-- Ảnh sản phẩm upload được lưu dạng data URL trong DB (giới hạn ~900px), seed dùng hình minh họa tự vẽ.
+- Ảnh sản phẩm mẫu là ảnh CC0 từ StockSnap (link trong `server/product-images.js`, gắn bằng `scripts/apply-product-images.mjs`); ảnh upload trong admin lưu dạng data URL trong DB (~900px). Sản phẩm không có ảnh sẽ hiện hình minh họa tự vẽ.
 - Chưa có đa ngôn ngữ, đa cửa hàng, vendor, affiliate, forum.
 
 ## 8. Ghi chú kỹ thuật
