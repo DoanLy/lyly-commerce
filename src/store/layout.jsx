@@ -94,7 +94,7 @@ function MiniCart() {
   return (
     <div className="mini-cart-wrap" onMouseEnter={load}>
       <Link to="/cart" className="cart-button" id="header-cart-button" data-cart-count={cartCount}>
-        <ShoppingBag size={18} /> Cart <span className="count" id="header-cart-count">({cartCount})</span>
+        <ShoppingBag size={18} /> <span className="desktop-only">Cart</span> <span className="count" id="header-cart-count">({cartCount})</span>
       </Link>
       <div className="mini-cart" id="header-mini-cart">
         {!cart ? <p>Loading…</p> : !cart.items.length ? <p>You have no items in your shopping cart.</p> : (

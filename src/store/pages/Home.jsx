@@ -1,30 +1,51 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Laptop, Camera, Shirt, Gift } from 'lucide-react'
+import { ArrowRight, Gift, Truck, Tag, Sparkles } from 'lucide-react'
 import { api, formatDate } from '../../lib/api.js'
 import { useStore, useAsync, Loading, useDocumentTitle } from '../ui.jsx'
 import { BenefitBar, ProductGrid } from '../layout.jsx'
 
+// Hero photos: CC0 images from StockSnap (https://stocksnap.io), no attribution required.
 const SLIDES = [
-  { eyebrow: 'New season tech', title: 'Work lighter with the Aurora Air 13', copy: 'All-day battery, silent design and a 10% welcome discount with code WELCOME10.', to: '/category/notebooks', cta: 'Shop notebooks', Icon: Laptop, tone: 'sage' },
-  { eyebrow: 'Capture everything', title: 'Mirrorless cameras from $749', copy: 'Bundle a lens and get free shipping on orders over $100.', to: '/category/camera-photo', cta: 'Explore cameras', Icon: Camera, tone: 'cream' },
-  { eyebrow: 'Apparel week', title: '5% off all apparel, automatically', copy: 'Sneakers, jackets and accessories made from recycled fibres.', to: '/category/apparel', cta: 'Shop apparel', Icon: Shirt, tone: 'blush' },
+  { eyebrow: 'New season tech', title: 'Work lighter with the Aurora Air 13', copy: 'All-day battery, silent design and a 10% welcome discount with code WELCOME10.', to: '/category/notebooks', cta: 'Shop notebooks', tone: 'sage',
+    image: 'https://cdn.stocksnap.io/img-thumbs/960w/D3OTBIDS9X.jpg', alt: 'Bright home office with a laptop on a white desk', badge: { Icon: Tag, title: 'WELCOME10', text: '10% off your first order' } },
+  { eyebrow: 'Capture everything', title: 'Mirrorless cameras from $749', copy: 'Bundle a lens and get free shipping on orders over $100.', to: '/category/camera-photo', cta: 'Explore cameras', tone: 'cream',
+    image: 'https://cdn.stocksnap.io/img-thumbs/960w/PM78CUSN6D.jpg', alt: 'Camera bodies, lenses and accessories laid out on a wooden floor', badge: { Icon: Truck, title: 'Free shipping', text: 'On orders over $100' } },
+  { eyebrow: 'Apparel week', title: '5% off all apparel, automatically', copy: 'Sneakers, jackets and accessories made from recycled fibres.', to: '/category/apparel', cta: 'Shop apparel', tone: 'blush',
+    image: 'https://cdn.stocksnap.io/img-thumbs/960w/ZN97ZIF3ZU.jpg', alt: 'Rail of neutral-toned clothes in a warmly lit boutique', badge: { Icon: Sparkles, title: '-5% applied', text: 'No code needed' } },
 ]
 
 function Hero() {
   const [i, setI] = useState(0)
-  useEffect(() => { const t = setInterval(() => setI((x) => (x + 1) % SLIDES.length), 6000); return () => clearInterval(t) }, [])
+  const [paused, setPaused] = useState(false)
+  useEffect(() => {
+    if (paused) return undefined
+    const t = setInterval(() => setI((x) => (x + 1) % SLIDES.length), 6500)
+    return () => clearInterval(t)
+  }, [paused])
   const s = SLIDES[i]
   return (
-    <section className={`hero-section tone-${s.tone}`} id="home-hero" data-slide={i}>
-      <div className="hero-content">
-        <div className="rating"><span>★★★★★</span> Rated 4.8 by our customers</div>
-        <p className="eyebrow">{s.eyebrow}</p>
-        <h1 id="home-hero-title">{s.title}</h1>
-        <p className="hero-copy">{s.copy}</p>
-        <Link to={s.to} className="dark-button" id="home-hero-cta">{s.cta}</Link>
+    <section className={`hero-section tone-${s.tone}`} id="home-hero" data-slide={i} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <div className="hero-inner">
+        <div className="hero-content" key={i}>
+          <div className="rating"><span>★★★★★</span> Rated 4.8 by our customers</div>
+          <p className="eyebrow">{s.eyebrow}</p>
+          <h1 id="home-hero-title">{s.title}</h1>
+          <p className="hero-copy">{s.copy}</p>
+          <Link to={s.to} className="dark-button" id="home-hero-cta">{s.cta} <ArrowRight size={15} /></Link>
+        </div>
+        <div className="hero-media" id="home-hero-media">
+          <div className="hero-frame">
+            {SLIDES.map((x, n) => (
+              <img key={x.image} id={`home-hero-image-${n}`} src={x.image} alt={n === i ? x.alt : ''} aria-hidden={n !== i} className={n === i ? 'active' : ''} loading={n === 0 ? 'eager' : 'lazy'} />
+            ))}
+          </div>
+          <div className="hero-badge" id="home-hero-badge" key={`b${i}`}>
+            <span><s.badge.Icon size={18} /></span>
+            <div><b>{s.badge.title}</b><small>{s.badge.text}</small></div>
+          </div>
+        </div>
       </div>
-      <div className="hero-art" aria-hidden="true"><s.Icon strokeWidth={0.9} /></div>
       <div className="hero-dots" id="home-hero-dots">
         {SLIDES.map((_, n) => <button key={n} id={`home-hero-dot-${n}`} className={n === i ? 'active' : ''} aria-label={`Slide ${n + 1}`} onClick={() => setI(n)} />)}
       </div>

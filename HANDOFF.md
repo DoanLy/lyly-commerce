@@ -1,6 +1,6 @@
 # HANDOFF — LyLy Commerce
 
-Cập nhật lần cuối: 2026-11-13 · version 1.0.2
+Cập nhật lần cuối: 2026-11-13 · version 1.0.3
 
 ## 1. Tổng quan
 
